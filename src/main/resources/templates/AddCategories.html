@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" th:dir="${#locale.language == 'ar' ? 'rtl' : 'ltr'}">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Add Categories</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="vendors/feather/feather.css">
+  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+  <!-- endinject -->
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo mr-5" href=""><h3 class="mr-2">Product Card</h3></a>        
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <span class="icon-menu"></span>
+        </button>        
+        <ul class="navbar-nav navbar-nav-right">          
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="icon-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial -->
+      <!-- partial:../../partials/_sidebar.html -->
+       <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{./categoryAll}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">All Categories</span>
+            </a>
+          </li>          
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{./categoryForm}">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Add Categories</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{./productAll}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">All Products</span>
+            </a>
+          </li>          
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{./productForm}">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Add Products</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title" th:text="#{text.addCategories}"></h4>
+                    <form class="forms-sample" th:action="@{./categoryAdd}" th:object="${requestDTO}" method="POST">
+                      <div class="form-group">
+                        <label for="exampleInputName1" th:text="#{text.categoryName}"></label>
+                        <input class="form-control" th:field="*{name}" type="text" id="name" name="name" value="">
+                      </div>                      
+                      <div class="form-group">
+                        <label for="exampleTextarea1" th:text="#{text.categoryDescription}">Textarea</label>
+                        <textarea class="form-control" th:field="*{description}" type="text" id="description" name="description" value="" rows="4"></textarea>
+                      </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2" th:text="#{text.categoryStatus}">Default select</label>
+                            <select class="form-control" id="activeStatus" name="activeStatus">
+                                <option value="0" th:text="#{text.available}" th:selected="${requestDTO.activeStatus == 0}">Select Resident Type</option>
+                                <option value="1" th:text="#{text.unavailable}" th:selected="${requestDTO.activeStatus == 1}">Kuwaiti</option>
+                            </select>
+                          </div>
+                      <button type="submit" class="btn btn-primary mr-2" th:text="#{text.submit}">Submit</button>
+                      <button class="btn btn-light">Cancel</button>
+                    </form>
+                  </div>
+                </div>
+              </div>        
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <!-- <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span> -->
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="js/off-canvas.js"></script>
+  <script src="js/hoverable-collapse.js"></script>
+  <script src="js/template.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <!-- End custom js for this page-->
+</body>
+
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" th:dir="${#locale.language == 'ar' ? 'rtl' : 'ltr'}">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Category Details</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="vendors/feather/feather.css">
+  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+  <!-- endinject -->
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo mr-5" href=""><h3 class="mr-2">Product Card</h3></a>        
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <span class="icon-menu"></span>
+        </button>        
+        <ul class="navbar-nav navbar-nav-right">          
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="icon-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial -->
+      <!-- partial:../../partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{./categoryAll}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">All Categories</span>
+            </a>
+          </li>          
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{./categoryForm}">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Add Categories</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{./productAll}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">All Products</span>
+            </a>
+          </li>          
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{./productForm}">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Add Products</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title" th:text="#{text.products}"></h4>  
+                  <th:block th:if="${productResponse == null or productResponse.productList.empty}">
+                           <h1>No more records</h1>
+                       </th:block>
+                  <div class="table-responsive">
+                     <th:block th:if="${productResponse != null and not productResponse.productList.empty}">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th th:text="#{text.productName}">User</th>
+                          <th th:text="#{text.productDescription}">Sale</th>
+                          <th th:text="#{text.productBrand}">Product</th>
+                          <th th:text="#{text.price}">User</th>
+                          <th th:text="#{text.productCategory}">Product</th>
+                          <th th:text="#{text.productStatus}">Sale</th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>                           
+                        <tr th:each="product, rowStat : ${productResponse.productList}">
+                          <td th:text="${rowStat.index + 1}"></td>
+                          <td th:text="${product.name}">Jacob</td>
+                          <td th:text="${product.description}">Photoshop</td>
+                          <td th:text="${product.brand}">Jacob</td>
+                          <td th:text="${product.price}">Photoshop</td>
+                          <td th:text="${product.category.id}">Photoshop</td>
+                          <td>
+                          <span th:switch="${product.activeStatus}">
+                                    <span th:case="0" style="red;">                                        
+                                        <span th:text="#{text.unavailable}">Pending</span>
+                                    </span>
+                                    <span th:case="1" style="color:green;">                                        
+                                        <span th:text="#{text.available}">Transferred</span>
+                                    </span>
+                                    <span th:case="*">                                        
+                                        <span th:text="#{text.unknown}">Unknown Status</span>
+                                    </span>
+                           </span>  
+                          </td>
+                          <td> <form th:action="@{/productDelete}" method="post">
+                                <input type="hidden" name="id" th:value="${product.id}" />
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form></td>
+                          <td>
+                            <form th:action="@{/productUpdate}" method="post">
+                                <input type="hidden" name="id" th:value="${product.id}" />
+                                <input type="hidden" name="name" th:value="${product.name}" />
+                                <input type="hidden" name="description" th:value="${product.description}" />
+                                <input type="hidden" name="activeStatus" th:value="${product.activeStatus}" />
+                                <input type="hidden" name="brand" th:value="${product.brand}" />
+                                <input type="hidden" name="price" th:value="${product.price}" />
+                                <input type="hidden" name="category" th:value="${product.category.id}" />
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </form>
+                        </td>
+                        </tr>                      
+                    </table>  
+                          </th:block>
+                  </div>
+                </div>
+              </div>
+            </div>       
+             
+          </div>
+        </div>
+          
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+             <div>            
+              <th:block th:if="${productResponse != null and not productResponse.productList.empty}">
+                   <section>
+            <!-- Pagination controls -->
+            <div class="pagination-container">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:if="${requestDTO.page > 0}">
+                        <a class="page-link" th:href="@{'/productAll?page=' + (${requestDTO.page - 1}) + '&limit=' + ${requestDTO.limit}}">
+                            <span aria-hidden="true">&laquo; <span th:text="#{text.prev}"></span></span>
+                        </a>
+                    </li>
+
+                    <li class="page-item">
+                        <span class="page-link"><span th:text="#{text.page}"></span> <span th:text="${requestDTO.page}"></span></span>
+                    </li>
+
+                    <li class="page-item">
+                        <!-- Increment the page number when the "Next" button is clicked -->
+                        <a class="page-link" th:href="@{'/productAll?page=' + (${requestDTO.page + 1}) + '&limit=' + ${requestDTO.limit}}">
+                            <span aria-hidden="true"><span th:text="#{text.next}"></span> &raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>                
+                </th:block>   
+              </div>
+          </div>
+        </footer>        
+        <!-- partial -->
+      </div>      
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="js/off-canvas.js"></script>
+  <script src="js/hoverable-collapse.js"></script>
+  <script src="js/template.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <!-- End custom js for this page-->
+</body>
+
+</html>
